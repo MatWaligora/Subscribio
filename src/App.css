@@ -5,6 +5,11 @@
     color: #f68113;
 }
 
+.App-header {
+    margin: 0;
+    padding: 15px;
+}
+
 .Button {
     outline: none;
     background-color: #282c34;
