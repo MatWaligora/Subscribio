@@ -5,111 +5,36 @@ import './NewSubscription.css';
 import * as actions from '../../store/actions/index';
 
 class newSubscription extends Component {
-  state = {
-    subscription: {
-      service: {
-        value: '',
-        config: {
-          type: 'text',
-          name: 'Service',
-          placeholder: 'Service'
-        }
-      },
-      amount: {
-        value: 0,
-        config: {
-          type: 'number',
-          name: 'Amount',
-          placeholder: 'Amount'
-        }
-      },
-      period: {
-        value: 'month',
-        config: {
-          type: 'select',
-          name: 'Period',
-          placeholder: 'Month',
-          options: [
-            {
-              value: 'week',
-              displayName: 'Week'
-            },
-            {
-              value: 'month',
-              displayName: 'Month'
-            },
-            {
-              value: 'year',
-              displayName: 'Year'
-            }
-          ]
-        }
-      },
-      startDate: {
-        value: new Date(),
-        config: {
-          type: 'date',
-          name: 'Start date',
-          placeholder: 'Start date'
-        }
-      },
-      endDate: {
-        value: new Date(),
-        config: {
-          type: 'date',
-          name: 'End date',
-          placeholder: 'End date'
-        }
-      }
-    }
-  };
-
   handleFormSubmission = (ev) => {
     ev.preventDefault();
     const newSubscription = {};
-    for ( let key in this.state.subscription ) {
-      newSubscription[key] = this.state.subscription[key].value;
+    for ( let key in this.props.editedSubscription ) {
+      newSubscription[key] = this.props.editedSubscription[key].value;
     }
-    this.props.onNewSubscription(newSubscription);
-    this.props.closeModal();
+    this.props.editionMode === 'add' ? this.props.onNewSubscription(newSubscription) : this.props.onUpdateSubscription(newSubscription) ;
+
   };
 
   inputChangeHandler = (ev, formIdentifier) => {
-    this.updateValue(ev.target.value, formIdentifier)
-  };
-
-  updateValue = (newValue, formIdentifier) => {
-    console.log('updateValue', newValue, formIdentifier);
-    const updatedValue = {
-      ...this.state.subscription[formIdentifier],
-      value: newValue
-    };
-    const updatedForm = {
-      ...this.state.subscription,
-      [formIdentifier]: updatedValue
-    };
-    this.setState({
-      subscription: updatedForm
-    })
+    this.props.onUpdateEditedSubscriptionValue(ev.target.value, formIdentifier)
   };
 
   render() {
     const formElementsArray = [];
 
-    for ( let key in this.state.subscription ) {
+    for ( let key in this.props.editedSubscription ) {
       formElementsArray.push( {
         id: key,
-        config: this.state.subscription[key].config,
-        value: this.state.subscription[key].value
+        config: this.props.editedSubscription[key].config,
+        value: this.props.editedSubscription[key].value
       } );
     }
-
     const form = formElementsArray.map(formElement => (
       <Input key={formElement.id}
              elementConfig={formElement.config}
              value={formElement.value}
              handleChange={(ev) => this.inputChangeHandler(ev, formElement.id)}
-             handleDateChange={(value) => this.updateValue(value, formElement.id)}/>
+             handleDateChange={(value) => this.props.onUpdateEditedSubscriptionValue(value, formElement.id)}/>
     ));
 
     return (
@@ -117,17 +42,28 @@ class newSubscription extends Component {
         <form onSubmit={this.handleFormSubmission}>
           {form}
           <br/>
-          <button type="submit" className="Button">Add</button>
+          <button type="submit" className="Button">
+            {this.props.editionMode === 'add' ? <span>Add</span> : <span>Save</span>}
+          </button>
         </form>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    onNewSubscription: (subscription) => dispatch(actions.addSubscription((subscription)))
+    editedSubscription: state.editedSubscription,
+    editionMode: state.editionMode
   }
 };
 
-export default connect(null, mapDispatchToProps)(newSubscription);
+const mapDispatchToProps = dispatch => {
+  return {
+    onNewSubscription: (subscription) => dispatch(actions.addSubscription((subscription))),
+    onUpdateSubscription: (subscription) => dispatch(actions.updateSubscription((subscription))),
+    onUpdateEditedSubscriptionValue: (value, formIdentifier) => dispatch(actions.updateEditedSubscriptionValue(value, formIdentifier)),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(newSubscription);

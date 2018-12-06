@@ -1,5 +1,9 @@
 export {
   addSubscription,
   removeSubscription,
-  updateSubscription
+  updateSubscription,
+  updateEditedSubscriptionValue,
+  setEditedSubscription,
+  setFreshEditedSubscription,
+  toggleEditionModal
 } from './subscriptions';

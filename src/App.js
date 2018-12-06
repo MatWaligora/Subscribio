@@ -3,21 +3,10 @@ import './App.css';
 import Subscriptions from './containers/Subscriptions';
 import NewSubscription from './containers/NewSubscription/NewSubscription';
 import Modal from './components/Ui/Modal/Modal';
+import {connect} from 'react-redux';
+import * as actions from './store/actions/index';
 
 class App extends Component {
-  state = {
-    showModal: false,
-
-  };
-
-  addNewSubscription = () => {
-    this.setState({showModal: true});
-  };
-
-  closeModal = () => {
-    this.setState({showModal: false});
-  };
-
   render() {
     return (
       <div className="App">
@@ -25,16 +14,29 @@ class App extends Component {
             <h1>Subscribio</h1>
         </header>
           <main className="App-main">
-            { this.state.showModal
-              ? <Modal closeModal={this.closeModal}>
-                  <NewSubscription closeModal={this.closeModal}/>
+            { this.props.showModal
+              ? <Modal closeModal={this.props.toggleEditionModal}>
+                  <NewSubscription closeModal={this.props.toggleEditionModal}/>
                 </Modal>
               : null }
-              <Subscriptions addNew={this.addNewSubscription}/>
+              <Subscriptions addNew={this.props.addNewSubscription}/>
           </main>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+        return {
+          showModal: state.showEditionModal
+        }
+};
+
+const mapDispatchToProps = dispatch => {
+        return {
+          addNewSubscription: () => dispatch(actions.setFreshEditedSubscription()),
+          toggleEditionModal: () => dispatch(actions.toggleEditionModal()),
+        }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

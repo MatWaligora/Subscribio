@@ -4,9 +4,9 @@ import Subscription from '../components/Subscription/Subscription';
 
 class Subscriptions extends Component {
     render() {
-        const subs = this.props.subscriptions.map(subscription => {
+        const subs = this.props.subscriptions.map((subscription, index) => {
             return (
-                <Subscription {...subscription} key={subscription.id} edit={this.props.handleEdit}/>
+                <Subscription {...subscription} key={subscription.service + index} edit={this.props.handleEdit}/>
             )
         });
 
