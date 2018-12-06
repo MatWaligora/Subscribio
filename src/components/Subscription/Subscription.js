@@ -15,6 +15,10 @@ const subscription = (props) => {
       <div>
         {startDate}
       </div>
+      <div className="Overlay">
+        <div onClick={() => props.edit(props.id)}>Edit</div>
+        <div>Delete</div>
+      </div>
     </div>
   );
 }

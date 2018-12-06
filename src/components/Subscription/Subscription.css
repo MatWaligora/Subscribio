@@ -1,4 +1,6 @@
 .Subscription {
+    box-sizing: border-box;
+    position: relative;
     border-radius: 15px;
     border: 2px solid #f68113;
     width: 90%;
@@ -10,6 +12,7 @@
     color: #f68113;
     font-weight: bold;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .Subscription > div {
@@ -23,12 +26,41 @@
     }
 }
 
-.Subscription:hover {
+.Overlay {
+    display: none;
+}
+
+.Overlay div {
+    box-sizing: border-box;
+    padding: 5px 10px;
+}
+
+.Subscription:hover > .Overlay {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100%;
+    z-index: 2;
     background-color: #f68113;
     color: #282c34;
 }
 
-.Subscription-new {
+.Subscription:hover > .Overlay > div:hover {
+    border: 2px solid #282c34;
+    border-radius: 15px;
+}
+
+.Subscription-new > p {
     width: 100%;
     text-align: center;
+}
+
+.Subscription-new:hover {
+    background-color: #f68113;
+    color: #282c34;
 }
