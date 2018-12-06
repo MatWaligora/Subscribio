@@ -5,13 +5,13 @@ const subscription = (props) => {
     return (
         <div className="Subscription">
             <span>
-                {props.name}
+                {props.service}
             </span>
             <span>
-                {props.amount}
+                {props.amount.toFixed(2)}
             </span>
             <span>
-                {props.paymentDate}
+                {props.startDate}
             </span>
         </div>
     );

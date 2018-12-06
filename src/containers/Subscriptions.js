@@ -3,15 +3,6 @@ import {connect} from 'react-redux';
 import Subscription from '../components/Subscription/Subscription';
 
 class Subscriptions extends Component {
-
-    state = {
-        showInputs: false
-    };
-
-    addNewSubscription = () => {
-        this.setState({showInputs: true});
-    };
-
     render() {
         const subs = this.props.subscriptions.map(subscription => {
             return (
@@ -22,7 +13,7 @@ class Subscriptions extends Component {
         return (
             <div>
                 {subs}
-                <div className="Subscription" onClick={this.addNewSubscription}>
+                <div className="Subscription" onClick={this.props.addNew}>
                     <p className="Subscription-new">Add new</p>
                 </div>
             </div>

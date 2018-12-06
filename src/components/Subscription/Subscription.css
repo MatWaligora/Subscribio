@@ -9,12 +9,18 @@
     padding: 10px;
     color: #f68113;
     font-weight: bold;
+    cursor: pointer;
 }
 
 @media (min-width: 600px) {
     .Subscription {
         width: 60%;
     }
+}
+
+.Subscription:hover {
+    background-color: #f68113;
+    color: #282c34;
 }
 
 .Subscription-new {
