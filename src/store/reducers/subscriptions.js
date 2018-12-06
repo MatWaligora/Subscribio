@@ -1,6 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
 import shortid from 'shortid';
-import moment from 'moment';
 
 const getFreshSubscription = () => {
   return {
@@ -90,7 +89,6 @@ const addSubscription = (state, action) => {
 };
 
 const removeSubscription = (state, action) => {
-  console.log('removeSubscription', action);
   const subscriptions = state.subscriptions.slice();
   subscriptions.splice( subscriptions.findIndex(sub => sub.id === action.subscriptionId));
   return {
