@@ -1,9 +1,11 @@
 import React, {Fragment} from 'react';
+import './Input.css';
 
 const input = (props) => (
   <Fragment>
     <label htmlFor={props.name}>{props.name}</label>
-    <input {...props.elementConfig}
+    <input className="Input"
+           {...props.elementConfig}
            value={props.value}
            onChange={props.handleChange}/>
   </Fragment>
