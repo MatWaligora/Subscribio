@@ -1,0 +1,14 @@
+.Modal {
+    position: fixed;
+    width: 70%;
+    height: 70%;
+    z-index: 200;
+    left: 15%;
+    top: 15%;
+    background-color: #282c34;
+    color: #f68113;
+    border: 2px solid #f68113;
+    border-radius: 15px;
+    padding-top: 15px;
+    overflow: auto;
+}

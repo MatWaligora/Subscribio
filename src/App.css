@@ -16,3 +16,29 @@
 .App-main {
 
 }
+
+.Button {
+  outline: none;
+  background-color: #282c34;
+  color: #f68113;
+  border: 2px solid #f68113;
+  padding: 10px;
+  border-radius: 15px;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: #f68113;
+  color: #282c34;
+}
+
+
+.Button-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: none;
+  border-right: none;
+  font-size: 1em;
+}
