@@ -4,15 +4,15 @@ import './Subscription.css';
 const subscription = (props) => {
     return (
         <div className="Subscription">
-            <span>
+            <div>
                 {props.service}
-            </span>
-            <span>
-                {props.amount.toFixed(2)}
-            </span>
-            <span>
+            </div>
+            <div>
+                {(+props.amount).toFixed(2)} / {props.period}
+            </div>
+            <div>
                 {props.startDate}
-            </span>
+            </div>
         </div>
     );
 }
