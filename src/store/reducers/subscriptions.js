@@ -66,15 +66,15 @@ const initialState = {
   editedSubscriptionId: null,
   editionMode: 'add',
   subscriptions: [
-      {
-        id: '1',
-        service: 'Netflix',
-          startDate: '10.11.2018',
-          endDate: '10.11.2019',
-          paymentDate: '10.12.2018',
-          amount: 45,
-          period: 'month'
-      }
+    {
+      id: '1',
+      service: 'Netflix',
+      startDate: '10.11.2018',
+      endDate: '10.11.2019',
+      paymentDate: '10.12.2018',
+      amount: 45,
+      period: 'month'
+    }
   ]
 };
 
@@ -90,7 +90,7 @@ const addSubscription = (state, action) => {
 
 const removeSubscription = (state, action) => {
   const subscriptions = state.subscriptions.slice();
-  subscriptions.splice( subscriptions.findIndex(sub => sub.id === action.subscriptionId));
+  subscriptions.splice(subscriptions.findIndex(sub => sub.id === action.subscriptionId));
   return {
     ...state,
     subscriptions,
@@ -132,7 +132,7 @@ const toggleEditionModal = (state, action) => {
 
 const updateSubscription = (state, action) => {
   const subscriptions = state.subscriptions.slice();
-  const { subscription } = action;
+  const {subscription} = action;
   const editedSubscriptionIndex = subscriptions.findIndex(sub => sub.id === state.editedSubscriptionId);
   subscriptions[editedSubscriptionIndex] = subscription;
   return {
@@ -146,7 +146,7 @@ const updateSubscription = (state, action) => {
 const updateEditedSubscriptionValue = (state, action) => {
   const subscription = {...state.editedSubscription};
 
-  const { value: newValue, formIdentifier } = action.payload;
+  const {value: newValue, formIdentifier} = action.payload;
 
   const updatedFormValue = {
     ...subscription[formIdentifier],
@@ -164,14 +164,22 @@ const updateEditedSubscriptionValue = (state, action) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_SUBSCRIPTION: return addSubscription(state, action);
-    case actionTypes.REMOVE_SUBSCRIPTION: return removeSubscription(state, action);
-    case actionTypes.UPDATE_SUBSCRIPTION: return updateSubscription(state, action);
-    case actionTypes.UPDATE_EDITED_SUBSCRIPTION_FORM_VALUE: return updateEditedSubscriptionValue(state, action);
-    case actionTypes.SET_EDITED_SUBSCRIPTION: return setEditedSubscription(state, action);
-    case actionTypes.SET_FRESH_EDITED_SUBSCRIPTION: return setFreshEditedSubscription(state, action);
-    case actionTypes.TOGGLE_EDITION_MODAL: return toggleEditionModal(state, action);
-    default: return state;
+    case actionTypes.ADD_SUBSCRIPTION:
+      return addSubscription(state, action);
+    case actionTypes.REMOVE_SUBSCRIPTION:
+      return removeSubscription(state, action);
+    case actionTypes.UPDATE_SUBSCRIPTION:
+      return updateSubscription(state, action);
+    case actionTypes.UPDATE_EDITED_SUBSCRIPTION_FORM_VALUE:
+      return updateEditedSubscriptionValue(state, action);
+    case actionTypes.SET_EDITED_SUBSCRIPTION:
+      return setEditedSubscription(state, action);
+    case actionTypes.SET_FRESH_EDITED_SUBSCRIPTION:
+      return setFreshEditedSubscription(state, action);
+    case actionTypes.TOGGLE_EDITION_MODAL:
+      return toggleEditionModal(state, action);
+    default:
+      return state;
   }
 };
 

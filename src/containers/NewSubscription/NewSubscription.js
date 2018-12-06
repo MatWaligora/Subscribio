@@ -8,10 +8,10 @@ class newSubscription extends Component {
   handleFormSubmission = (ev) => {
     ev.preventDefault();
     const newSubscription = {};
-    for ( let key in this.props.editedSubscription ) {
+    for (let key in this.props.editedSubscription) {
       newSubscription[key] = this.props.editedSubscription[key].value;
     }
-    this.props.editionMode === 'add' ? this.props.onNewSubscription(newSubscription) : this.props.onUpdateSubscription(newSubscription) ;
+    this.props.editionMode === 'add' ? this.props.onNewSubscription(newSubscription) : this.props.onUpdateSubscription(newSubscription);
 
   };
 
@@ -22,12 +22,12 @@ class newSubscription extends Component {
   render() {
     const formElementsArray = [];
 
-    for ( let key in this.props.editedSubscription ) {
-      formElementsArray.push( {
+    for (let key in this.props.editedSubscription) {
+      formElementsArray.push({
         id: key,
         config: this.props.editedSubscription[key].config,
         value: this.props.editedSubscription[key].value
-      } );
+      });
     }
     const form = formElementsArray.map(formElement => (
       <Input key={formElement.id}

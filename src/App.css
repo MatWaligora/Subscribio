@@ -1,66 +1,54 @@
 .App {
-  text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  color: #f68113;
-}
-
-.App-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.App-main {
-
+    text-align: center;
+    background-color: #282c34;
+    min-height: 100vh;
+    color: #f68113;
 }
 
 .Button {
-  outline: none;
-  background-color: #282c34;
-  color: #f68113;
-  border: 2px solid #f68113;
-  padding: 10px;
-  border-radius: 15px;
-  font-size: 1.1em;
-  cursor: pointer;
+    outline: none;
+    background-color: #282c34;
+    color: #f68113;
+    border: 2px solid #f68113;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 1.1em;
+    cursor: pointer;
 }
 
 .Button:hover {
-  background-color: #f68113;
-  color: #282c34;
+    background-color: #f68113;
+    color: #282c34;
 }
 
 
 .Button-close {
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  border-top: none;
-  border-right: none;
-  font-size: 1em;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    border-top: none;
+    border-right: none;
+    font-size: 1em;
 }
 
 .modal-enter {
-  opacity: 0;
-  transform: scale(0.1) translateY(45%);
+    opacity: 0;
+    transform: scale(0.1) translateY(45%);
 }
 
 .modal-enter-active {
-  opacity: 1;
-  transform: scale(1) translateY(0%);
-  transition: all 0.3s ease-in;
+    opacity: 1;
+    transform: scale(1) translateY(0%);
+    transition: all 0.3s ease-in;
 }
 
 .modal-exit {
-  opacity: 1;
-  transform: scale(1) translateY(0%);
+    opacity: 1;
+    transform: scale(1) translateY(0%);
 }
 
 .modal-exit-active {
-  opacity: 0;
-  transform: scale(0.1) translateY(45%);
-  transition: all 0.3s ease-out;
+    opacity: 0;
+    transform: scale(0.1) translateY(45%);
+    transition: all 0.3s ease-out;
 }

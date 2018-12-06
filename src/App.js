@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Subscriptions from './containers/Subscriptions';
@@ -15,38 +15,36 @@ class App extends Component {
         timeout={300}
         classNames="modal"
         unmountOnExit>
-        {(status) => (
-          <Modal className={`fade fade-${status}`} closeModal={this.props.toggleEditionModal}>
-            <NewSubscription closeModal={this.props.toggleEditionModal}/>
-          </Modal>
-        )}
+        <Modal closeModal={this.props.toggleEditionModal}>
+          <NewSubscription closeModal={this.props.toggleEditionModal}/>
+        </Modal>
       </CSSTransition>
     );
     return (
       <div className="App">
         <header className="App-header">
-            <h1>Subscribio</h1>
+          <h1>Subscribio</h1>
         </header>
-          <main className="App-main">
-            { modal }
-              <Subscriptions addNew={this.props.addNewSubscription}/>
-          </main>
+        <main className="App-main">
+          {modal}
+          <Subscriptions addNew={this.props.addNewSubscription}/>
+        </main>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-        return {
-          showModal: state.showEditionModal
-        }
+  return {
+    showModal: state.showEditionModal
+  }
 };
 
 const mapDispatchToProps = dispatch => {
-        return {
-          addNewSubscription: () => dispatch(actions.setFreshEditedSubscription()),
-          toggleEditionModal: () => dispatch(actions.toggleEditionModal()),
-        }
+  return {
+    addNewSubscription: () => dispatch(actions.setFreshEditedSubscription()),
+    toggleEditionModal: () => dispatch(actions.toggleEditionModal()),
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

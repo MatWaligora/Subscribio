@@ -32,7 +32,6 @@ const subscription = (props) => {
 };
 
 
-
 const mapDispatchToProps = dispatch => {
   return {
     onSetEditedSubscription: (subscriptionId) => dispatch(actions.setEditedSubscription((subscriptionId))),

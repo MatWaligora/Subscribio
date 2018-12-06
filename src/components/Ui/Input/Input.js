@@ -22,8 +22,8 @@ const input = (props) => {
         {props.elementConfig.options.map(opt => {
           return (<option key={opt.displayName}
                           value={opt.value}>
-                    {opt.displayName}
-                  </option>)
+            {opt.displayName}
+          </option>)
         })}
       </select>);
       break;
