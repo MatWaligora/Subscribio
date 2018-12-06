@@ -1,8 +1,8 @@
 import React from 'react';
-import './Subscription.css';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import * as actions from "../../store/actions";
+import './Subscription.css';
 
 const subscription = (props) => {
   const startDate = moment(props.startDate).format('DD.MM.YYYY');

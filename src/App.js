@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import CSSTransition from 'react-transition-group/CSSTransition';
-import './App.css';
 import Subscriptions from './containers/Subscriptions';
 import NewSubscription from './containers/NewSubscription/NewSubscription';
 import Modal from './components/Ui/Modal/Modal';
-import {connect} from 'react-redux';
 import * as actions from './store/actions/index';
+import './App.css';
 
 class App extends Component {
   render() {
@@ -14,8 +14,7 @@ class App extends Component {
         in={this.props.showModal}
         timeout={300}
         classNames="modal"
-        unmountOnExit
-      >
+        unmountOnExit>
         {(status) => (
           <Modal className={`fade fade-${status}`} closeModal={this.props.toggleEditionModal}>
             <NewSubscription closeModal={this.props.toggleEditionModal}/>
