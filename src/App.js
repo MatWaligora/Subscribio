@@ -4,6 +4,8 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import Subscriptions from './containers/Subscriptions';
 import NewSubscription from './containers/NewSubscription/NewSubscription';
 import Modal from './components/Ui/Modal/Modal';
+import Chart from './containers/Chart/Chart';
+
 import * as actions from './store/actions/index';
 import './App.css';
 
@@ -28,6 +30,7 @@ class App extends Component {
         <main className="App-main">
           {modal}
           <Subscriptions addNew={this.props.addNewSubscription}/>
+          <Chart/>
         </main>
       </div>
     );

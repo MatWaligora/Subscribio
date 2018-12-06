@@ -69,7 +69,7 @@ const initialState = {
     {
       id: '1',
       service: 'Netflix',
-      startDate: '10.11.2018',
+      startDate: '02.02.2018',
       endDate: '10.11.2019',
       paymentDate: '10.12.2018',
       amount: 45,
@@ -89,8 +89,9 @@ const addSubscription = (state, action) => {
 };
 
 const removeSubscription = (state, action) => {
+  console.log('removeSubscription', action);
   const subscriptions = state.subscriptions.slice();
-  subscriptions.splice(subscriptions.findIndex(sub => sub.id === action.subscriptionId));
+  subscriptions.splice(subscriptions.findIndex(sub => sub.id === action.subscriptionId), 1);
   return {
     ...state,
     subscriptions,
