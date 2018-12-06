@@ -27,7 +27,7 @@ class App extends Component {
           <main className="App-main">
             { this.state.showModal
               ? <Modal closeModal={this.closeModal}>
-                  <NewSubscription/>
+                  <NewSubscription closeModal={this.closeModal}/>
                 </Modal>
               : null }
               <Subscriptions addNew={this.addNewSubscription}/>

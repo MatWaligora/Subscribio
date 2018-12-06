@@ -11,7 +11,7 @@ class newSubscription extends Component {
         value: '',
         config: {
           type: 'text',
-          name: 'service',
+          name: 'Service',
           placeholder: 'Service'
         }
       },
@@ -19,23 +19,37 @@ class newSubscription extends Component {
         value: 0,
         config: {
           type: 'number',
-          name: 'amount',
+          name: 'Amount',
           placeholder: 'Amount'
         }
       },
       period: {
-        value: '',
+        value: 'month',
         config: {
-          type: 'text',
-          name: 'period',
-          placeholder: 'Month'
+          type: 'select',
+          name: 'Period',
+          placeholder: 'Month',
+          options: [
+            {
+              value: 'week',
+              displayName: 'Week'
+            },
+            {
+              value: 'month',
+              displayName: 'Month'
+            },
+            {
+              value: 'year',
+              displayName: 'Year'
+            }
+          ]
         }
       },
       startDate: {
         value: new Date(),
         config: {
           type: 'date',
-          name: 'startDate',
+          name: 'Start date',
           placeholder: 'Start date'
         }
       },
@@ -43,8 +57,8 @@ class newSubscription extends Component {
         value: new Date(),
         config: {
           type: 'date',
-          name: 'startDate',
-          placeholder: 'Start date'
+          name: 'End date',
+          placeholder: 'End date'
         }
       }
     }
@@ -57,12 +71,18 @@ class newSubscription extends Component {
       newSubscription[key] = this.state.subscription[key].value;
     }
     this.props.onNewSubscription(newSubscription);
+    this.props.closeModal();
   };
 
   inputChangeHandler = (ev, formIdentifier) => {
+    this.updateValue(ev.target.value, formIdentifier)
+  };
+
+  updateValue = (newValue, formIdentifier) => {
+    console.log('updateValue', newValue, formIdentifier);
     const updatedValue = {
       ...this.state.subscription[formIdentifier],
-      value: ev.target.value
+      value: newValue
     };
     const updatedForm = {
       ...this.state.subscription,
@@ -79,18 +99,24 @@ class newSubscription extends Component {
     for ( let key in this.state.subscription ) {
       formElementsArray.push( {
         id: key,
-        config: this.state.subscription[key].config
+        config: this.state.subscription[key].config,
+        value: this.state.subscription[key].value
       } );
     }
 
     const form = formElementsArray.map(formElement => (
-      <Input key={formElement.id} elementConfig={formElement.config} value={formElement.value} handleChange={(ev) => this.inputChangeHandler(ev, formElement.id)}/>
+      <Input key={formElement.id}
+             elementConfig={formElement.config}
+             value={formElement.value}
+             handleChange={(ev) => this.inputChangeHandler(ev, formElement.id)}
+             handleDateChange={(value) => this.updateValue(value, formElement.id)}/>
     ));
 
     return (
       <div className="NewSubscription">
         <form onSubmit={this.handleFormSubmission}>
           {form}
+          <br/>
           <button type="submit" className="Button">Add</button>
         </form>
       </div>
