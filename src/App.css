@@ -42,3 +42,25 @@
   border-right: none;
   font-size: 1em;
 }
+
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.1) translateY(45%);
+}
+
+.modal-enter-active {
+  opacity: 1;
+  transform: scale(1) translateY(0%);
+  transition: all 0.3s ease-in;
+}
+
+.modal-exit {
+  opacity: 1;
+  transform: scale(1) translateY(0%);
+}
+
+.modal-exit-active {
+  opacity: 0;
+  transform: scale(0.1) translateY(45%);
+  transition: all 0.3s ease-out;
+}

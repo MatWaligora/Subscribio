@@ -18,8 +18,14 @@ const subscription = (props) => {
         {startDate}
       </div>
       <div className="Overlay">
-        <div onClick={() => props.onSetEditedSubscription(props.id)}>Edit</div>
-        <div onClick={() => props.onRemoveSubscription(props.id)}>Delete</div>
+        <div className="Overlay-button"
+             onClick={() => props.onSetEditedSubscription(props.id)}>
+          Edit
+        </div>
+        <div className="Overlay-button"
+             onClick={() => props.onRemoveSubscription(props.id)}>
+          Delete
+        </div>
       </div>
     </div>
   );
