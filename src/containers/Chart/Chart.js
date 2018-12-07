@@ -40,11 +40,10 @@ class chart extends Component {
     });
     return (
       <div className="Chart">
-        <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-          <Line type="monotone" dataKey="value" stroke="#8884d8" />
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <XAxis dataKey="name" />
-          <YAxis />
+        <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 15, left: 5 }}>
+          <Line type="monotone" dataKey="value" stroke="#f68113" />
+          <XAxis dataKey="name" label={{ value: "Month", position: 'insideBottom', offset: -10, stroke: '#f68113' }}/>
+          <YAxis dataKey="value" label="Value" label={{ value: "Value", angle: -90, position: 'insideLeft',stroke: '#f68113' }}/>
           <Tooltip />
         </LineChart>
       </div>
