@@ -1,9 +1,11 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-sub';
 
-export const fetchSubscriptions = () => {
+export const fetchSubscriptions = (loading = true) => {
   return dispatch => {
-    dispatch(fetchSubscriptionsStart());
+    if(loading) {
+      dispatch(fetchSubscriptionsStart());
+    }
     axios.get('/subscriptions.json').then( res => {
       const subscriptions = [];
       for(let key in res.data) {
@@ -94,7 +96,7 @@ export const addSubscription = (subscription) => {
     dispatch(addSubscriptionStart());
     axios.post('/subscriptions.json/', subscription).then( res => {
         dispatch(addSubscriptionSuccess({...subscription, id: res.data.name}));
-        dispatch(fetchSubscriptions());
+        dispatch(fetchSubscriptions(false));
     }).catch(error => {
       dispatch(addSubscriptionError({error}));
     })
@@ -107,7 +109,7 @@ export const removeSubscription = (subscriptionId) => {
     axios.delete(`/subscriptions/${subscriptionId}.json`).then( res => {
       console.log(res);
       dispatch(removeSubscriptionSuccess());
-      dispatch(fetchSubscriptions());
+      dispatch(fetchSubscriptions(false));
     }).catch(error => {
       dispatch(removeSubscriptionError({error}));
     })
@@ -119,7 +121,7 @@ export const updateSubscription = ({subscription, id}) => {
     dispatch(updateSubscriptionStart());
     axios.put(`/subscriptions/${id}.json`, subscription).then( res => {
       dispatch(updateSubscriptionSuccess());
-      dispatch(fetchSubscriptions());
+      dispatch(fetchSubscriptions(false));
     }).catch(error => {
       dispatch(updateSubscriptionError({error}));
     })
