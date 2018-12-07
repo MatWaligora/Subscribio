@@ -27,7 +27,7 @@ class chart extends Component {
       let lastMonthIndex = data.findIndex(item => item.name === months[moment(sub.endDate).get('month')]);
       let startYear = moment(sub.startDate).get('year');
       let endYear = moment(sub.endDate).get('year');
-      for (let i = startMonthIndex; i < (endYear > startYear ? 12 : lastMonthIndex); i++) {
+      for (let i = startMonthIndex; i <= (endYear > startYear ? 11 : lastMonthIndex); i++) {
         let { amount, period } = sub;
         amount = Number(amount);
         switch (period) {
