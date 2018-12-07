@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Subscription from '../components/Subscription/Subscription';
-import Spinner from '../components/Ui/Spinner/Spinner';
+import Subscription from '../../components/Subscription/Subscription';
+import Spinner from '../../components/Ui/Spinner/Spinner';
 import {
   CSSTransition,
   TransitionGroup,

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import CSSTransition from 'react-transition-group/CSSTransition';
-import Subscriptions from './containers/Subscriptions';
+import Subscriptions from './containers/Subscriptions/Subscriptions';
 import NewSubscription from './containers/NewSubscription/NewSubscription';
 import Modal from './components/Ui/Modal/Modal';
 import Chart from './containers/Chart/Chart';
