@@ -1,6 +1,7 @@
 import React from 'react';
+import './Spinner.css';
 
-const spinner = (props) => (
+const spinner = () => (
   <div className="sk-cube-grid">
     <div className="sk-cube sk-cube1"></div>
     <div className="sk-cube sk-cube2"></div>

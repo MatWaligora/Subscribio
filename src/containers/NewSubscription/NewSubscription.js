@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Input from '../../components/Ui/Input/Input';
 import * as actions from '../../store/actions/index';
-import './NewSubscription.css';
 
 class newSubscription extends Component {
   handleFormSubmission = (ev) => {

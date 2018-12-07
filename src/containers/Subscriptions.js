@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Subscription from '../components/Subscription/Subscription';
+import Spinner from '../components/Ui/Spinner/Spinner';
 
 class Subscriptions extends Component {
   render() {
-    const subs = this.props.subscriptions.map((subscription, index) => {
+    let subs = this.props.subscriptions.map((subscription, index) => {
       return (
         <Subscription {...subscription} key={subscription.service + index} edit={this.props.handleEdit}/>
       )
     });
-
+    if (this.props.fetchingData) {
+      subs = <Spinner/>
+    }
     return (
       <div>
         {subs}
@@ -23,7 +26,8 @@ class Subscriptions extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    subscriptions: state.subscriptions
+    subscriptions: state.subscriptions,
+    fetchingData: state.loading
   }
 };
 
