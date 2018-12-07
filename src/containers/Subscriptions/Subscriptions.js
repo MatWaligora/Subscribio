@@ -28,6 +28,7 @@ class Subscriptions extends Component {
     }
     return (
       <div>
+        {this.props.error}
         {subs}
         <div className="Subscription Subscription-new" onClick={this.props.addNew}>
           <p className="Subscription-new">Add new</p>
@@ -40,7 +41,8 @@ class Subscriptions extends Component {
 const mapStateToProps = (state) => {
   return {
     subscriptions: state.subscriptions,
-    fetchingData: state.loading
+    fetchingData: state.loading,
+    error: state.error
   }
 };
 

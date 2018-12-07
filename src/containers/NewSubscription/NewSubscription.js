@@ -22,7 +22,6 @@ class newSubscription extends Component {
 
   render() {
     const formElementsArray = [];
-
     for (let key in this.props.editedSubscription) {
       formElementsArray.push({
         id: key,

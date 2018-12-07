@@ -50,7 +50,8 @@ const removeSubscriptionStart = () => {
 };
 const removeSubscriptionError = () => {
   return {
-    type: actionTypes.REMOVE_SUBSCRIPTION_ERROR
+    type: actionTypes.REMOVE_SUBSCRIPTION_ERROR,
+    error: 'Failed to remove subscription'
   };
 };
 
@@ -66,10 +67,10 @@ const updateSubscriptionStart = (subscription) => {
     subscription
   };
 };
-const updateSubscriptionError = (subscription) => {
+const updateSubscriptionError = () => {
   return {
     type: actionTypes.UPDATE_SUBSCRIPTION_ERROR,
-    subscription
+    error: 'Failed to update subscription'
   };
 };
 
@@ -81,7 +82,8 @@ const addSubscriptionStart = (subscription) => {
 };
 const addSubscriptionError = () => {
   return {
-    type: actionTypes.ADD_SUBSCRIPTION_ERROR
+    type: actionTypes.ADD_SUBSCRIPTION_ERROR,
+    error: 'Failed to add a subscription'
   };
 };
 const addSubscriptionSuccess = () => {
@@ -95,7 +97,7 @@ export const addSubscription = (subscription) => {
   return dispatch => {
     dispatch(addSubscriptionStart());
     axios.post('/subscriptions.json/', subscription).then( res => {
-        dispatch(addSubscriptionSuccess({...subscription, id: res.data.name}));
+        dispatch(addSubscriptionSuccess());
         dispatch(fetchSubscriptions(false));
     }).catch(error => {
       dispatch(addSubscriptionError({error}));

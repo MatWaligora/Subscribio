@@ -68,12 +68,32 @@ const initialState = {
   loading: false
 };
 
-const addSubscription = (state, action) => {
+const addSubscriptionStart = (state, action) => {
   return {
     ...state,
-    showEditionModal: false
+    showEditionModal: false,
+    loading: false
   }
 };
+
+const addSubscriptionError = (state, action) => {
+  return {
+    ...state,
+    showEditionModal: false,
+    loading: false,
+    error: action.error
+  }
+};
+
+const addSubscriptionSuccess = (state, action) => {
+  return {
+    ...state,
+    showEditionModal: false,
+    loading: false,
+    error: null
+  }
+};
+
 const fetchSubscriptionsSuccess = (state, action) => {
   return {
     ...state,
@@ -90,6 +110,13 @@ const removeSubscription = (state, action) => {
     ...state,
     subscriptions,
     editedSubscriptionId: null
+  }
+};
+
+const removeSubscriptionError = (state, action) => {
+  return {
+    ...state,
+    error: action.error
   }
 };
 
@@ -132,6 +159,14 @@ const updateSubscriptionSuccess = (state, action) => {
     editedSubscriptionId: null
   }
 };
+const updateSubscriptionError = (state, action) => {
+  return {
+    ...state,
+    showEditionModal: false,
+    editedSubscriptionId: null,
+    error: action.error
+  }
+};
 
 const updateEditedSubscriptionValue = (state, action) => {
   const subscription = {...state.editedSubscription};
@@ -169,12 +204,20 @@ const fetchSubsriptionsError = (state, action) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_SUBSCRIPTION:
-      return addSubscription(state, action);
-    case actionTypes.REMOVE_SUBSCRIPTION:
+    case actionTypes.ADD_SUBSCRIPTION_START:
+      return addSubscriptionStart(state, action);
+    case actionTypes.ADD_SUBSCRIPTION_ERROR:
+      return addSubscriptionError(state, action);
+    case actionTypes.ADD_SUBSCRIPTION_SUCCESS:
+      return addSubscriptionSuccess(state, action);
+    case actionTypes.REMOVE_SUBSCRIPTION_SUCCESS:
       return removeSubscription(state, action);
+    case actionTypes.REMOVE_SUBSCRIPTION_ERROR:
+      return removeSubscriptionError(state, action);
     case actionTypes.UPDATE_SUBSCRIPTION_SUCCESS:
       return updateSubscriptionSuccess(state, action);
+    case actionTypes.UPDATE_SUBSCRIPTION_ERROR:
+      return updateSubscriptionError(state, action);
     case actionTypes.UPDATE_EDITED_SUBSCRIPTION_FORM_VALUE:
       return updateEditedSubscriptionValue(state, action);
     case actionTypes.SET_EDITED_SUBSCRIPTION:
