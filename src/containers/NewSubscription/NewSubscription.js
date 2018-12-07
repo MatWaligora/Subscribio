@@ -11,7 +11,9 @@ class newSubscription extends Component {
     for (let key in this.props.editedSubscription) {
       newSubscription[key] = this.props.editedSubscription[key].value;
     }
-    this.props.editionMode === 'add' ? this.props.onNewSubscription(newSubscription) : this.props.onUpdateSubscription(newSubscription);
+    this.props.editionMode === 'add'
+      ? this.props.onNewSubscription(newSubscription)
+      : this.props.onUpdateSubscription({subscription: newSubscription, id: this.props.editedSubscriptionId});
 
   };
 
@@ -54,6 +56,7 @@ class newSubscription extends Component {
 const mapStateToProps = state => {
   return {
     editedSubscription: state.editedSubscription,
+    editedSubscriptionId: state.editedSubscriptionId,
     editionMode: state.editionMode
   }
 };

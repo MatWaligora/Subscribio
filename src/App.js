@@ -10,6 +10,10 @@ import * as actions from './store/actions/index';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.onFetchSubscriptions();
+  }
+
   render() {
     const modal = (
       <CSSTransition
@@ -47,6 +51,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addNewSubscription: () => dispatch(actions.setFreshEditedSubscription()),
     toggleEditionModal: () => dispatch(actions.toggleEditionModal()),
+    onFetchSubscriptions: () => dispatch(actions.fetchSubscriptions()),
   }
 };
 

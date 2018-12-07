@@ -1,5 +1,4 @@
 import * as actionTypes from '../actions/actionTypes';
-import shortid from 'shortid';
 
 const getFreshSubscription = () => {
   return {
@@ -65,31 +64,26 @@ const initialState = {
   showEditionModal: false,
   editedSubscriptionId: null,
   editionMode: 'add',
-  subscriptions: [
-    {
-      id: '1',
-      service: 'Netflix',
-      startDate: '02.02.2018',
-      endDate: '10.11.2019',
-      paymentDate: '10.12.2018',
-      amount: 45,
-      period: 'month'
-    }
-  ]
+  subscriptions: [],
+  loading: false
 };
 
 const addSubscription = (state, action) => {
-  const subscriptions = state.subscriptions.slice();
-  subscriptions.push({...action.subscription, id: shortid.generate()});
   return {
     ...state,
-    subscriptions,
     showEditionModal: false
+  }
+};
+const fetchSubscriptionsSuccess = (state, action) => {
+  return {
+    ...state,
+    subscriptions: action.subscriptions,
+    loading: false,
+    error: null
   }
 };
 
 const removeSubscription = (state, action) => {
-  console.log('removeSubscription', action);
   const subscriptions = state.subscriptions.slice();
   subscriptions.splice(subscriptions.findIndex(sub => sub.id === action.subscriptionId), 1);
   return {
@@ -131,14 +125,9 @@ const toggleEditionModal = (state, action) => {
   }
 };
 
-const updateSubscription = (state, action) => {
-  const subscriptions = state.subscriptions.slice();
-  const {subscription} = action;
-  const editedSubscriptionIndex = subscriptions.findIndex(sub => sub.id === state.editedSubscriptionId);
-  subscriptions[editedSubscriptionIndex] = subscription;
+const updateSubscriptionSuccess = (state, action) => {
   return {
     ...state,
-    subscriptions,
     showEditionModal: false,
     editedSubscriptionId: null
   }
@@ -163,14 +152,29 @@ const updateEditedSubscriptionValue = (state, action) => {
   }
 };
 
+const fetchedSubscriptionsStart = (state, action) => {
+  return {
+    ...state,
+    loading: true
+  }
+};
+
+const fetchSubsriptionsError = (state, action) => {
+  return {
+    ...state,
+    loading: false,
+    error: action.error
+  }
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_SUBSCRIPTION:
       return addSubscription(state, action);
     case actionTypes.REMOVE_SUBSCRIPTION:
       return removeSubscription(state, action);
-    case actionTypes.UPDATE_SUBSCRIPTION:
-      return updateSubscription(state, action);
+    case actionTypes.UPDATE_SUBSCRIPTION_SUCCESS:
+      return updateSubscriptionSuccess(state, action);
     case actionTypes.UPDATE_EDITED_SUBSCRIPTION_FORM_VALUE:
       return updateEditedSubscriptionValue(state, action);
     case actionTypes.SET_EDITED_SUBSCRIPTION:
@@ -179,6 +183,12 @@ const reducer = (state = initialState, action) => {
       return setFreshEditedSubscription(state, action);
     case actionTypes.TOGGLE_EDITION_MODAL:
       return toggleEditionModal(state, action);
+    case actionTypes.FETCH_SUBSCRIPTIONS_START:
+      return fetchedSubscriptionsStart(state, action);
+    case actionTypes.FETCH_SUBSCRIPTIONS_ERROR:
+      return fetchSubsriptionsError(state, action);
+    case actionTypes.FETCH_SUBSCRIPTIONS_SUCCESS:
+      return fetchSubscriptionsSuccess(state, action);
     default:
       return state;
   }

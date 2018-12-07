@@ -1,24 +1,129 @@
 import * as actionTypes from './actionTypes';
+import axios from '../../axios-sub';
 
-export const addSubscription = (subscription) => {
+export const fetchSubscriptions = () => {
+  return dispatch => {
+    dispatch(fetchSubscriptionsStart());
+    axios.get('/subscriptions.json').then( res => {
+      const subscriptions = [];
+      for(let key in res.data) {
+        subscriptions.push({
+          ...res.data[key],
+          id: key
+        });
+      }
+      dispatch(fetchSubscriptionsSuccess(subscriptions));
+    }).catch(error => fetchSubscriptionsError(error))
+  }
+};
+
+const fetchSubscriptionsSuccess = (subscriptions) => {
   return {
-    type: actionTypes.ADD_SUBSCRIPTION,
+    type: actionTypes.FETCH_SUBSCRIPTIONS_SUCCESS,
+    subscriptions
+  };
+};
+const fetchSubscriptionsStart = () => {
+  return {
+    type: actionTypes.FETCH_SUBSCRIPTIONS_START
+  };
+};
+const fetchSubscriptionsError = (error) => {
+  return {
+    type: actionTypes.FETCH_SUBSCRIPTIONS_ERROR,
+    error
+  };
+};
+
+const removeSubscriptionSuccess = (subscription) => {
+  return {
+    type: actionTypes.REMOVE_SUBSCRIPTION_SUCCESS,
     subscription
   };
+};
+const removeSubscriptionStart = () => {
+  return {
+    type: actionTypes.REMOVE_SUBSCRIPTION_START
+  };
+};
+const removeSubscriptionError = () => {
+  return {
+    type: actionTypes.REMOVE_SUBSCRIPTION_ERROR
+  };
+};
+
+const updateSubscriptionSuccess = (subscription) => {
+  return {
+    type: actionTypes.UPDATE_SUBSCRIPTION_SUCCESS,
+    subscription
+  };
+};
+const updateSubscriptionStart = (subscription) => {
+  return {
+    type: actionTypes.UPDATE_SUBSCRIPTION_START,
+    subscription
+  };
+};
+const updateSubscriptionError = (subscription) => {
+  return {
+    type: actionTypes.UPDATE_SUBSCRIPTION_ERROR,
+    subscription
+  };
+};
+
+const addSubscriptionStart = (subscription) => {
+  return {
+    type: actionTypes.ADD_SUBSCRIPTION_START,
+    subscription
+  };
+};
+const addSubscriptionError = () => {
+  return {
+    type: actionTypes.ADD_SUBSCRIPTION_ERROR
+  };
+};
+const addSubscriptionSuccess = () => {
+  return {
+    type: actionTypes.ADD_SUBSCRIPTION_SUCCESS
+  };
+};
+
+
+export const addSubscription = (subscription) => {
+  return dispatch => {
+    dispatch(addSubscriptionStart());
+    axios.post('/subscriptions.json/', subscription).then( res => {
+        dispatch(addSubscriptionSuccess({...subscription, id: res.data.name}));
+        dispatch(fetchSubscriptions());
+    }).catch(error => {
+      dispatch(addSubscriptionError({error}));
+    })
+  }
 };
 
 export const removeSubscription = (subscriptionId) => {
-  return {
-    type: actionTypes.REMOVE_SUBSCRIPTION,
-    subscriptionId
-  };
+  return dispatch => {
+    dispatch(removeSubscriptionStart());
+    axios.delete(`/subscriptions/${subscriptionId}.json`).then( res => {
+      console.log(res);
+      dispatch(removeSubscriptionSuccess());
+      dispatch(fetchSubscriptions());
+    }).catch(error => {
+      dispatch(removeSubscriptionError({error}));
+    })
+  }
 };
 
-export const updateSubscription = (subscription) => {
-  return {
-    type: actionTypes.UPDATE_SUBSCRIPTION,
-    subscription
-  };
+export const updateSubscription = ({subscription, id}) => {
+  return dispatch => {
+    dispatch(updateSubscriptionStart());
+    axios.put(`/subscriptions/${id}.json`, subscription).then( res => {
+      dispatch(updateSubscriptionSuccess());
+      dispatch(fetchSubscriptions());
+    }).catch(error => {
+      dispatch(updateSubscriptionError({error}));
+    })
+  }
 };
 
 export const updateEditedSubscriptionValue = (value, formIdentifier) => {
