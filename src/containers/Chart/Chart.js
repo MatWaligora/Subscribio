@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Line, LineChart, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { Line, LineChart, XAxis, YAxis, Tooltip } from 'recharts';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import './Chart.css';
@@ -53,7 +53,7 @@ class chart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    subscriptions: state.subscriptions
+    subscriptions: state.sub.subscriptions
   }
 };
 

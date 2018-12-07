@@ -19,6 +19,7 @@
     border-radius: 15px;
     font-size: 1.1em;
     cursor: pointer;
+    margin: 10px;
 }
 
 .Button:hover {
@@ -34,6 +35,7 @@
     border-top: none;
     border-right: none;
     font-size: 1em;
+    margin: 0;
 }
 
 .modal-enter {

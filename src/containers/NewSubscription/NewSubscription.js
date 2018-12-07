@@ -10,9 +10,10 @@ class newSubscription extends Component {
     for (let key in this.props.editedSubscription) {
       newSubscription[key] = this.props.editedSubscription[key].value;
     }
+    newSubscription.userId = this.props.userId;
     this.props.editionMode === 'add'
-      ? this.props.onNewSubscription(newSubscription)
-      : this.props.onUpdateSubscription({subscription: newSubscription, id: this.props.editedSubscriptionId});
+      ? this.props.onNewSubscription(newSubscription, this.props.token)
+      : this.props.onUpdateSubscription({subscription: newSubscription, id: this.props.editedSubscriptionId}, this.props.token);
 
   };
 
@@ -53,16 +54,18 @@ class newSubscription extends Component {
 
 const mapStateToProps = state => {
   return {
-    editedSubscription: state.editedSubscription,
-    editedSubscriptionId: state.editedSubscriptionId,
-    editionMode: state.editionMode
+    editedSubscription: state.sub.editedSubscription,
+    editedSubscriptionId: state.sub.editedSubscriptionId,
+    editionMode: state.sub.editionMode,
+    token: state.auth.token,
+    userId: state.auth.userId
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onNewSubscription: (subscription) => dispatch(actions.addSubscription((subscription))),
-    onUpdateSubscription: (subscription) => dispatch(actions.updateSubscription((subscription))),
+    onNewSubscription: (subscription, token) => dispatch(actions.addSubscription(subscription, token)),
+    onUpdateSubscription: (subscription, token) => dispatch(actions.updateSubscription(subscription, token)),
     onUpdateEditedSubscriptionValue: (value, formIdentifier) => dispatch(actions.updateEditedSubscriptionValue(value, formIdentifier)),
   }
 };

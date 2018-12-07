@@ -4,17 +4,31 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import Subscriptions from './containers/Subscriptions/Subscriptions';
 import NewSubscription from './containers/NewSubscription/NewSubscription';
 import Modal from './components/Ui/Modal/Modal';
-import Chart from './containers/Chart/Chart';
-
+import { Route, Switch, Redirect } from 'react-router-dom';
 import * as actions from './store/actions/index';
 import './App.css';
+import Login from "./containers/Auth/Login/Login";
 
 class App extends Component {
   componentDidMount() {
-    this.props.onFetchSubscriptions();
+    this.props.onTryAutoSignup();
   }
 
   render() {
+    let routes = (
+      <Switch>
+        <Route path="/auth" component={Login}/>
+        <Route path="/" exact component={Subscriptions}/>
+        <Redirect to="/" />
+      </Switch>
+    );
+
+    if(this.props.isAuthenticated) {
+      routes = <Switch>
+        <Route to="/"  component={Subscriptions}/>
+        <Redirect to="/"/>
+      </Switch>
+    }
     const modal = (
       <CSSTransition
         in={this.props.showModal}
@@ -33,8 +47,7 @@ class App extends Component {
         </header>
         <main className="App-main">
           {modal}
-          <Subscriptions addNew={this.props.addNewSubscription}/>
-          <Chart/>
+          {routes}
         </main>
       </div>
     );
@@ -43,15 +56,16 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    showModal: state.showEditionModal
+    showModal: state.sub.showEditionModal,
+    isAuthenticated: state.auth.token !== null,
+    token: state.auth.token
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addNewSubscription: () => dispatch(actions.setFreshEditedSubscription()),
     toggleEditionModal: () => dispatch(actions.toggleEditionModal()),
-    onFetchSubscriptions: () => dispatch(actions.fetchSubscriptions()),
+    onTryAutoSignup: () => dispatch( actions.authCheckState() )
   }
 };
 

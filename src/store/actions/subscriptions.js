@@ -1,12 +1,12 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-sub';
 
-export const fetchSubscriptions = (loading = true) => {
+export const fetchSubscriptions = (token, loading = true) => {
   return dispatch => {
     if(loading) {
       dispatch(fetchSubscriptionsStart());
     }
-    axios.get('/subscriptions.json').then( res => {
+    axios.get(`/subscriptions.json?auth=${token}`).then( res => {
       const subscriptions = [];
       for(let key in res.data) {
         subscriptions.push({
@@ -93,37 +93,37 @@ const addSubscriptionSuccess = () => {
 };
 
 
-export const addSubscription = (subscription) => {
+export const addSubscription = (subscription, token) => {
   return dispatch => {
     dispatch(addSubscriptionStart());
-    axios.post('/subscriptions.json/', subscription).then( res => {
+    axios.post(`/subscriptions.json?auth=${token}`, subscription).then( res => {
         dispatch(addSubscriptionSuccess());
-        dispatch(fetchSubscriptions(false));
+        dispatch(fetchSubscriptions(token, false));
     }).catch(error => {
       dispatch(addSubscriptionError({error}));
     })
   }
 };
 
-export const removeSubscription = (subscriptionId) => {
+export const removeSubscription = (subscriptionId, token) => {
   return dispatch => {
     dispatch(removeSubscriptionStart());
-    axios.delete(`/subscriptions/${subscriptionId}.json`).then( res => {
+    axios.delete(`/subscriptions/${subscriptionId}.json?auth=${token}`).then( res => {
       console.log(res);
       dispatch(removeSubscriptionSuccess());
-      dispatch(fetchSubscriptions(false));
+      dispatch(fetchSubscriptions(token,false));
     }).catch(error => {
       dispatch(removeSubscriptionError({error}));
     })
   }
 };
 
-export const updateSubscription = ({subscription, id}) => {
+export const updateSubscription = ({subscription, id}, token) => {
   return dispatch => {
     dispatch(updateSubscriptionStart());
-    axios.put(`/subscriptions/${id}.json`, subscription).then( res => {
+    axios.put(`/subscriptions/${id}.json?auth=${token}`, subscription).then( res => {
       dispatch(updateSubscriptionSuccess());
-      dispatch(fetchSubscriptions(false));
+      dispatch(fetchSubscriptions(token, false));
     }).catch(error => {
       dispatch(updateSubscriptionError({error}));
     })

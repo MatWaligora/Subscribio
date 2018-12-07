@@ -6,18 +6,23 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
+import * as actions from "../../store/actions";
+import Chart from "../Chart/Chart";
 
 class Subscriptions extends Component {
+  componentDidMount() {
+    this.props.onFetchSubscriptions(this.props.token);
+  }
   render() {
     let subs = <TransitionGroup>
       {
         this.props.subscriptions.map((subscription, index) => {
           return (
             <CSSTransition
-              key={subscription.id }
+              key={subscription.id}
               timeout={500}
               classNames="fade">
-                <Subscription {...subscription} edit={this.props.handleEdit}/>
+              <Subscription {...subscription} edit={this.props.handleEdit}/>
             </CSSTransition>
           )
         })
@@ -30,9 +35,10 @@ class Subscriptions extends Component {
       <div>
         {this.props.error}
         {subs}
-        <div className="Subscription Subscription-new" onClick={this.props.addNew}>
+        <div className="Subscription Subscription-new" onClick={this.props.addNewSubscription}>
           <p className="Subscription-new">Add new</p>
         </div>
+        <Chart/>
       </div>
     );
   }
@@ -40,10 +46,18 @@ class Subscriptions extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    subscriptions: state.subscriptions,
-    fetchingData: state.loading,
-    error: state.error
+    subscriptions: state.sub.subscriptions,
+    fetchingData: state.sub.loading,
+    error: state.sub.error,
+    token: state.auth.token
   }
 };
 
-export default connect(mapStateToProps)(Subscriptions);
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewSubscription: () => dispatch(actions.setFreshEditedSubscription()),
+    onFetchSubscriptions: (token) => dispatch(actions.fetchSubscriptions(token)),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Subscriptions);

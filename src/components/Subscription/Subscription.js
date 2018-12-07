@@ -23,7 +23,7 @@ const subscription = (props) => {
           Edit
         </div>
         <div className="Overlay-button"
-             onClick={() => props.onRemoveSubscription(props.id)}>
+             onClick={() => props.onRemoveSubscription(props.id, props.token)}>
           Delete
         </div>
       </div>
@@ -31,12 +31,17 @@ const subscription = (props) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    token: state.auth.token
+  }
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSetEditedSubscription: (subscriptionId) => dispatch(actions.setEditedSubscription((subscriptionId))),
-    onRemoveSubscription: (subscriptionId) => dispatch(actions.removeSubscription((subscriptionId))),
+    onSetEditedSubscription: (subscriptionId) => dispatch(actions.setEditedSubscription(subscriptionId)),
+    onRemoveSubscription: (subscriptionId, token) => dispatch(actions.removeSubscription(subscriptionId, token)),
   }
 };
-export default connect(null, mapDispatchToProps)(subscription);
+export default connect(mapStateToProps, mapDispatchToProps)(subscription);
 

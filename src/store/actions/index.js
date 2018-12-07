@@ -8,3 +8,8 @@ export {
   toggleEditionModal,
   fetchSubscriptions
 } from './subscriptions';
+
+export {
+  auth,
+  authCheckState
+} from './auth';
