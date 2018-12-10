@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Subscriptions from './containers/Subscriptions/Subscriptions';
@@ -16,18 +16,18 @@ class App extends Component {
 
   render() {
     let routes = (
-      <Fragment>
-        <Route to="/" exact component={Subscriptions}/>
+      <Switch>
+        <Route path="/" exact component={Subscriptions}/>
         <Redirect to="/"/>
-      </Fragment>
+      </Switch>
     );
 
     if(!this.props.isAuthenticated) {
       routes = (
-        <Fragment>
+        <Switch>
           <Route path="/auth" component={Login}/>
           <Redirect to="/auth"/>
-        </Fragment>
+        </Switch>
       )
     }
 
