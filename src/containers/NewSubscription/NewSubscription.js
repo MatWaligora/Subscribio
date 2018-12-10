@@ -24,16 +24,21 @@ class newSubscription extends Component {
   render() {
     const formElementsArray = [];
     for (let key in this.props.editedSubscription) {
+      const {config, value, valid, touched} = this.props.editedSubscription[key];
       formElementsArray.push({
         id: key,
-        config: this.props.editedSubscription[key].config,
-        value: this.props.editedSubscription[key].value
+        config,
+        value,
+        touched,
+        valid
       });
     }
     const form = formElementsArray.map(formElement => (
       <Input key={formElement.id}
              elementConfig={formElement.config}
              value={formElement.value}
+             isValid={formElement.valid}
+             isTouched={formElement.touched}
              handleChange={(ev) => this.inputChangeHandler(ev, formElement.id)}
              handleDateChange={(value) => this.props.onUpdateEditedSubscriptionValue(value, formElement.id)}/>
     ));

@@ -3,6 +3,7 @@ import Input from '../../../components/Ui/Input/Input';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import {Redirect} from "react-router-dom";
+import checkValidity from "../../../utils/validation";
 
 class Login extends Component {
   state = {
@@ -12,7 +13,13 @@ class Login extends Component {
         type: 'email',
         name: 'Email',
         placeholder: 'Your email'
-      }
+      },
+      rules: {
+        required: true,
+        isEmail: true
+      },
+      valid: false,
+      touched: false
     },
     password: {
       value: '',
@@ -20,7 +27,13 @@ class Login extends Component {
         type: 'password',
         name: 'Password',
         placeholder: 'Password'
-      }
+      },
+      rules: {
+        required: true,
+        minLength: 6
+      },
+      valid: false,
+      touched: false
     }
   };
 
@@ -30,7 +43,9 @@ class Login extends Component {
     const loginData = {email: {...this.state.email}, password: {...this.state.password}};
     const updatedFormValue = {
       ...loginData[formIdentifier],
-      value: newValue
+      valid: checkValidity(newValue, loginData[formIdentifier].rules),
+      value: newValue,
+      touched: true
     };
     this.setState({
       [formIdentifier]: updatedFormValue
@@ -46,9 +61,13 @@ class Login extends Component {
     return (<div>
       {this.props.isAuthenticated ? <Redirect to="/" /> : null}
       <Input elementConfig={this.state.email.config}
+             isValid={this.state.email.valid}
+             isTouched={this.state.email.touched}
              handleChange={(ev) => this.inputChangeHandler(ev, 'email')}
              value={this.state.email.value}/>
       <Input elementConfig={this.state.password.config}
+             isValid={this.state.password.valid}
+             isTouched={this.state.password.touched}
              handleChange={(ev) => this.inputChangeHandler(ev, 'password')}
              value={this.state.password.value}/>
       <button className="Button"

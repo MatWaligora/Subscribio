@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import checkValidity from '../../utils/validation';
 
 const getFreshSubscription = () => {
   return {
@@ -8,7 +9,14 @@ const getFreshSubscription = () => {
         type: 'text',
         name: 'Service',
         placeholder: 'Service'
-      }
+      },
+      rules: {
+        required: true,
+        minLength: 2,
+        maxLength: 20
+      },
+      valid: false,
+      touched: false
     },
     amount: {
       value: 0,
@@ -16,7 +24,14 @@ const getFreshSubscription = () => {
         type: 'number',
         name: 'Amount',
         placeholder: 'Amount'
-      }
+      },
+      rules: {
+        required: true,
+        minLength: 1,
+        isNumeric: true
+      },
+      valid: true,
+      touched: false
     },
     period: {
       value: 'month',
@@ -38,7 +53,9 @@ const getFreshSubscription = () => {
             displayName: 'Year'
           }
         ]
-      }
+      },
+      valid: true,
+      touched: false
     },
     startDate: {
       value: new Date(),
@@ -46,7 +63,9 @@ const getFreshSubscription = () => {
         type: 'date',
         name: 'Start date',
         placeholder: 'Start date'
-      }
+      },
+      valid: true,
+      touched: false
     },
     endDate: {
       value: new Date(),
@@ -54,7 +73,9 @@ const getFreshSubscription = () => {
         type: 'date',
         name: 'End date',
         placeholder: 'End date'
-      }
+      },
+      valid: true,
+      touched: false
     }
   }
 };
@@ -175,7 +196,9 @@ const updateEditedSubscriptionValue = (state, action) => {
 
   const updatedFormValue = {
     ...subscription[formIdentifier],
-    value: newValue
+    value: newValue,
+    valid: checkValidity(newValue, subscription[formIdentifier].rules),
+    touched: true
   };
   const updatedEditedSubscription = {
     ...subscription,

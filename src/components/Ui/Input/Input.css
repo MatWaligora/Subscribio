@@ -11,3 +11,15 @@
     margin: 15px auto;
     outline: none;
 }
+
+.Touched {
+    border: 2px solid #4baaf6;
+}
+
+.Valid {
+    border: 2px solid #2fb43f;
+}
+
+.Error {
+    border: 2px solid #f63948;
+}
