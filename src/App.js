@@ -14,6 +14,11 @@ class App extends Component {
     this.props.onTryAutoSignup();
   }
 
+  handleLogout = () => {
+    this.props.onLogout();
+    this.props.history.push('/auth');
+  };
+
   render() {
     let routes = (
       <Switch>
@@ -47,6 +52,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>Subscribio</h1>
+          <button onClick={this.handleLogout} className="Button Button-close">Logout</button>
         </header>
         <main className="App-main">
           {modal}
@@ -68,7 +74,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleEditionModal: () => dispatch(actions.toggleEditionModal()),
-    onTryAutoSignup: () => dispatch( actions.authCheckState() )
+    onTryAutoSignup: () => dispatch( actions.authCheckState() ),
+    onLogout: () => dispatch(actions.logout())
   }
 };
 
