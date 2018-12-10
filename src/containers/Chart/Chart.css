@@ -1,4 +1,12 @@
 .Chart {
     display: flex;
     justify-content: center;
+    width: 90%;
+    margin: 10px auto;
+}
+
+@media (min-width: 600px) {
+    .Chart {
+        width: 60%;
+    }
 }
