@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Input from '../../../components/Ui/Input/Input';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/index';
+import {Redirect} from "react-router-dom";
 
 class Login extends Component {
   state = {
@@ -43,6 +44,7 @@ class Login extends Component {
 
   render() {
     return (<div>
+      {this.props.isAuthenticated ? <Redirect to="/" /> : null}
       <Input elementConfig={this.state.email.config}
              handleChange={(ev) => this.inputChangeHandler(ev, 'email')}
              value={this.state.email.value}/>
@@ -61,6 +63,12 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token !== null
+  }
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     signIn: (email, password) => dispatch(actions.auth(email, password, false)),
@@ -68,4 +76,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

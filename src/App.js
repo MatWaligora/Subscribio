@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Subscriptions from './containers/Subscriptions/Subscriptions';
 import NewSubscription from './containers/NewSubscription/NewSubscription';
 import Modal from './components/Ui/Modal/Modal';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import * as actions from './store/actions/index';
 import './App.css';
 import Login from "./containers/Auth/Login/Login";
@@ -16,19 +16,21 @@ class App extends Component {
 
   render() {
     let routes = (
-      <Switch>
-        <Route path="/auth" component={Login}/>
-        <Route path="/" exact component={Subscriptions}/>
-        <Redirect to="/" />
-      </Switch>
+      <Fragment>
+        <Route to="/" exact component={Subscriptions}/>
+        <Redirect to="/"/>
+      </Fragment>
     );
 
-    if(this.props.isAuthenticated) {
-      routes = <Switch>
-        <Route to="/"  component={Subscriptions}/>
-        <Redirect to="/"/>
-      </Switch>
+    if(!this.props.isAuthenticated) {
+      routes = (
+        <Fragment>
+          <Route path="/auth" component={Login}/>
+          <Redirect to="/auth"/>
+        </Fragment>
+      )
     }
+
     const modal = (
       <CSSTransition
         in={this.props.showModal}
@@ -40,6 +42,7 @@ class App extends Component {
         </Modal>
       </CSSTransition>
     );
+
     return (
       <div className="App">
         <header className="App-header">
@@ -69,4 +72,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
