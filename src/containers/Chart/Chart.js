@@ -22,21 +22,23 @@ const months = [
 class chart extends Component {
   render () {
     const data = months.map(month => ({name: month, value: 0}) );
+
     this.props.subscriptions.forEach(sub => {
-      let startMonthIndex = data.findIndex(item => item.name === months[moment(sub.startDate).get('month')]);
-      let lastMonthIndex = data.findIndex(item => item.name === months[moment(sub.endDate).get('month')]);
-      let startYear = moment(sub.startDate).get('year');
-      let endYear = moment(sub.endDate).get('year');
+      const {startDate, endDate, amount, period} = sub;
+      const startMonthIndex = data.findIndex(item => item.name === months[moment(startDate).get('month')]);
+      const lastMonthIndex = data.findIndex(item => item.name === months[moment(endDate).get('month')]);
+      const startYear = moment(startDate).get('year');
+      const endYear = moment(endDate).get('year');
+
       for (let i = startMonthIndex; i <= (endYear > startYear ? 11 : lastMonthIndex); i++) {
-        let { amount, period } = sub;
-        amount = Number(amount);
+        let amountToAdd = Number(amount);
         switch (period) {
-          case 'month': data[i].value += amount; break;
-          case 'week': data[i].value += (amount * 4); break;
-          case 'year': data[i].value += (amount / 12); break;
-          return;
+          case 'month': data[i].value += amountToAdd; break;
+          case 'week': data[i].value += (amountToAdd * 4); break;
+          case 'year': data[i].value += (amountToAdd / 12); break;
         }
       }
+
     });
     return (
       <div className="Chart">
