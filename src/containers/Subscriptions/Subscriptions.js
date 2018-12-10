@@ -11,7 +11,7 @@ import Chart from "../Chart/Chart";
 
 class Subscriptions extends Component {
   componentDidMount() {
-    this.props.onFetchSubscriptions(this.props.token);
+    this.props.onFetchSubscriptions();
   }
 
   loginHandler = () => {
@@ -62,14 +62,15 @@ const mapStateToProps = (state) => {
     fetchingData: state.sub.loading,
     error: state.sub.error,
     token: state.auth.token,
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
+    userId: state.auth.userId
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addNewSubscription: () => dispatch(actions.setFreshEditedSubscription()),
-    onFetchSubscriptions: (token) => dispatch(actions.fetchSubscriptions(token)),
+    onFetchSubscriptions: () => dispatch(actions.fetchSubscriptions()),
   }
 };
 

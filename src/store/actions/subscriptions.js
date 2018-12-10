@@ -1,12 +1,16 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-sub';
 
-export const fetchSubscriptions = (token, loading = true) => {
-  return dispatch => {
+export const fetchSubscriptions = (loading = true) => {
+  return (dispatch, getState) => {
     if(loading) {
       dispatch(fetchSubscriptionsStart());
     }
-    axios.get(`/subscriptions.json?auth=${token}`).then( res => {
+    const { auth } = getState();
+    const { userId, token } = auth;
+
+    const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+    axios.get(`/subscriptions.json${queryParams}`).then( res => {
       const subscriptions = [];
       for(let key in res.data) {
         subscriptions.push({
@@ -98,7 +102,7 @@ export const addSubscription = (subscription, token) => {
     dispatch(addSubscriptionStart());
     axios.post(`/subscriptions.json?auth=${token}`, subscription).then( res => {
         dispatch(addSubscriptionSuccess());
-        dispatch(fetchSubscriptions(token, false));
+        dispatch(fetchSubscriptions( false));
     }).catch(error => {
       dispatch(addSubscriptionError({error}));
     })
@@ -111,7 +115,7 @@ export const removeSubscription = (subscriptionId, token) => {
     axios.delete(`/subscriptions/${subscriptionId}.json?auth=${token}`).then( res => {
       console.log(res);
       dispatch(removeSubscriptionSuccess());
-      dispatch(fetchSubscriptions(token,false));
+      dispatch(fetchSubscriptions(false));
     }).catch(error => {
       dispatch(removeSubscriptionError({error}));
     })
@@ -123,7 +127,7 @@ export const updateSubscription = ({subscription, id}, token) => {
     dispatch(updateSubscriptionStart());
     axios.put(`/subscriptions/${id}.json?auth=${token}`, subscription).then( res => {
       dispatch(updateSubscriptionSuccess());
-      dispatch(fetchSubscriptions(token, false));
+      dispatch(fetchSubscriptions(false));
     }).catch(error => {
       dispatch(updateSubscriptionError({error}));
     })
