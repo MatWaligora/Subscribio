@@ -70,6 +70,8 @@ class Login extends Component {
              isTouched={this.state.password.touched}
              handleChange={(ev) => this.inputChangeHandler(ev, 'password')}
              value={this.state.password.value}/>
+      <span className="Error-message">{this.props.errorMessage}</span>
+      <br/>
       <button className="Button"
               onClick={() => this.props.signIn(this.state.email.value, this.state.password.value)}>
         Sign in
@@ -84,7 +86,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
+    errorMessage: state.auth.error
   }
 };
 

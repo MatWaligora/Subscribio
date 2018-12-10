@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import * as errorCodes from '../../utils/errorCodes';
 
 const initialState = {
   token: null,
@@ -26,8 +27,14 @@ const authSuccess = (state, action) => {
 };
 
 const authFail = (state, action) => {
+  let message = '';
+  switch(action.error.message) {
+    case errorCodes.EMAIL_EXISTS: message = 'User with this email already exists'; break;
+    case errorCodes.EMAIL_NOT_FOUND: message = 'Email not found'; break;
+    case errorCodes.INVALID_PASSWORD: message = 'Invalid password'; break;
+  }
   return {...state,
-    error: action.error,
+    error: message,
     loading: false
   };
 };

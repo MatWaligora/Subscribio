@@ -59,3 +59,7 @@
     transform: scale(0.1) translateY(45%);
     transition: all 0.3s ease-out;
 }
+
+.Error-message {
+    color: #f63948;
+}
